@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AdminLTE 3 | Validation Form</title>
+<style th:replace="/admin/share/style"></style>
+</head>
+<body>
+
+	<h1 style="display: flex; justify-content: center; padding-top: 80px; padding-bottom: 20px;">
+		LOGIN ADMIN
+	</h1>
+	<!-- Main content -->
+	<div class="container-fluid"
+		style="display: flex; justify-content: center; padding-left: 450px;">
+		<div class="col-md-5">
+			<div class="card card-primary">
+					<div class="card-body">
+						<div class="form-group">
+							<label for="exampleInputEmail1">Username</label> <input
+								type="email" name="email" class="form-control"
+								id="exampleInputEmail1" >
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">Password</label> <input
+								type="password" name="password" class="form-control"
+								id="exampleInputPassword1">
+						</div>
+					</div>
+					<!-- /.card-body -->
+					<div class="card-footer">
+					<a th:href="@{/dashboard}" class="btn btn-primary">Log in</a>
+					</div>
+			</div>
+			<!-- /.card -->
+		</div>
+		<!--/.col (left) -->
+		<!-- right column -->
+		<div class="col-md-6"></div>
+		<!--/.col (right) -->
+	</div>
+	<!-- /.row -->
+
+<div th:fragment="script"></div> 
+<div th:replace="admin/share/script"></div>
+</body>
+</html>

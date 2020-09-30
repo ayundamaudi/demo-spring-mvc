@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin | Produk</title>
+<style th:replace="/admin/share/style"></style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+		<div th:replace="admin/share/header"></div>
+		<div th:replace="admin/share/left-side"></div>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1><i class="fas fa-folder-open"></i> Data Table Produk</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+             <li class="breadcrumb-item"><a th:href="@{/dashboard}">Dashboard</a></li>
+								<li class="breadcrumb-item active">Data Table Produk</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+	
+	<section class="content">
+		<div class="card">
+              <div class="card-body">
+              <a th:href="@{/product/add}" class="btn btn-success">Tambah Data Product</a><br><br>
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th>Foto</th>
+                    <th>Nama Brand</th>
+                    <th>Type Product</th>
+                    <th>Color Product</th>
+                    <th>Deskripsi Product</th>
+                    <th>Price Product</th>
+                    <th>Stock Product</th>
+                    <th>Sold Product</th>
+					<th>Action</th>
+					<!-- <th>Admin</th> -->
+                    <th>Created Date</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="product: ${listOfProduct}">
+                    <td th:text="${product.id_product}">1</td>
+                    <td th:text="${product.photo} ">a</td>
+                    <td th:text="${product.brand.name_brand}">a</td>
+                    <td th:text="${product.type}">a</td>
+                    <td th:text="${product.color}">1</td>
+                    <td th:text="${product.descrip}">a</td>
+                    <td th:text="${product.price}">a</td>
+                    <td th:text="${product.stock}">a</td>
+                    <td th:text="${product.sold}">a</td>
+                    <td>
+                     <a th:href="@{/product/edit/{id}/(id=${product.id_product})}" class="btn btn-warning"><i class="fas fa-edit"></i></a><br><br>
+                     <a th:href="@{/product/delete/{id}/(id=${product.id_product})}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+<!-- 					<td th:text="${product.admin.name_admin}">a</td> -->
+				     <td th:text="${product.created_product}">a</td>
+                    
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            </section>
+  </div>
+  <!-- /.content-wrapper -->
+<div th:replace="admin/share/footer"></div>
+</div>
+
+<div th:fragment="script"></div> 
+<div th:replace="admin/share/script"></div>
+</body>
+</html>

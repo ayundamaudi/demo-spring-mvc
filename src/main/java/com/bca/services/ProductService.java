@@ -28,8 +28,8 @@ public class ProductService {
 		return productRepo.findAll();
 	}
 	
-	public List<Product> findAll(int page){
-		Pageable pageable = PageRequest.of(page,10);
+	public List<Product> findAll(int page, int rows){
+		Pageable pageable = PageRequest.of(page-1,rows);
 		return productRepo.findAll(pageable).getContent();
 	}
 	

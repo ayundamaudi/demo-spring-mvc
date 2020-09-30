@@ -1,13 +1,19 @@
 package com.bca.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bca.dto.ErrorMessage;
 import com.bca.dto.ProductForm;
 import com.bca.entity.Product;
 import com.bca.repo.ProductRepo;
@@ -35,20 +41,35 @@ public class ProductController {
 	}
 
 	@PostMapping("/add")
-	public String save(ProductForm productForm, Model model) {
-//		if(productService.findBy
-		Product product = new Product();
-		product.setType(productForm.getType());
-		product.setPhoto(productForm.getPhoto());
-		product.setDescrip(productForm.getDescrip());
-		product.setColor(productForm.getColor());
-		product.setPrice(productForm.getPrice());
-		product.setStock(productForm.getStock());
-		product.setSold(productForm.getSold());
-		product.setBrand(brandService.findById(productForm.getBrandId()).get());
-		productService.save(product);
-		return "redirect:/product/list";
-//		return "admin/product_add";
+	public String save(@Valid ProductForm productForm, 
+			BindingResult bindingResult, 
+			Model model,
+			RedirectAttributes redirectAttribute) {
+		
+		if(!bindingResult.hasErrors()) {
+	//		if(productService.findBy
+			Product product = new Product();
+			product.setType(productForm.getType());
+			product.setPhoto(productForm.getPhoto());
+			product.setDescrip(productForm.getDescrip());
+			product.setColor(productForm.getColor());
+			product.setPrice(productForm.getPrice());
+			product.setStock(productForm.getStock());
+			product.setSold(productForm.getSold());
+			product.setBrand(brandService.findById(productForm.getBrandId()).get());
+			productService.save(product);
+			return "redirect:/product/list";
+	//		return "admin/product_add";
+		}else {
+			ErrorMessage msg = new ErrorMessage();
+			for(ObjectError err: bindingResult.getAllErrors()) {
+				msg.getMessages().add(err.getDefaultMessage());
+			}
+			model.addAttribute("brands", brandService.findAll());
+			model.addAttribute("productForm", productForm);
+			model.addAttribute("ERROR", msg );
+			return "admin/product_add";
+		}
 	}
 
 	@GetMapping("/list")

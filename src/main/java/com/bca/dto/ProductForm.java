@@ -1,16 +1,34 @@
 package com.bca.dto;
 
+import javax.validation.constraints.NotEmpty;
+/*import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;*/
+
 public class ProductForm {
 
+	@NotEmpty(message="Type is required")
+	/* @Size(min = 3, max = 5, message="Code length must be 3 to 5 characters") */
+	/* @Pattern(regexp = "BT[0-9]+", message = "Code must be start with BT") */
     private String type;
+	
+	@NotEmpty(message="Photo is required")
     private String photo;
+	
+	@NotEmpty(message="Deskripsi is required")
     private String descrip;
+	
+	@NotEmpty(message="Color is required")
 	private String color;
+	
     private double price;
+	
     private int stock;
+	
     private int sold;
+
     private int brandId;
 //    private int adminId;
+	
 	public String getType() {
 		return type;
 	}

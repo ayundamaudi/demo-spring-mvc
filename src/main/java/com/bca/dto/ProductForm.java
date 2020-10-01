@@ -11,6 +11,8 @@ public class ProductForm {
 	/* @Pattern(regexp = "BT[0-9]+", message = "Code must be start with BT") */
     private String type;
 	
+	private int id;
+	
 	@NotEmpty(message="Photo is required")
     private String photo;
 	
@@ -31,6 +33,12 @@ public class ProductForm {
 	
 	public String getType() {
 		return type;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public void setType(String type) {
 		this.type = type;

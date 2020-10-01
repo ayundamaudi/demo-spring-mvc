@@ -41,13 +41,11 @@ public class ProductController {
 	}
 
 	@PostMapping("/add")
-	public String save(@Valid ProductForm productForm, 
-			BindingResult bindingResult, 
-			Model model,
+	public String save(@Valid ProductForm productForm, BindingResult bindingResult, Model model,
 			RedirectAttributes redirectAttribute) {
-		
-		if(!bindingResult.hasErrors()) {
-	//		if(productService.findBy
+
+		if (!bindingResult.hasErrors()) {
+			// if(productService.findBy
 			Product product = new Product();
 			product.setType(productForm.getType());
 			product.setPhoto(productForm.getPhoto());
@@ -59,15 +57,15 @@ public class ProductController {
 			product.setBrand(brandService.findById(productForm.getBrandId()).get());
 			productService.save(product);
 			return "redirect:/product/list";
-	//		return "admin/product_add";
-		}else {
+			// return "admin/product_add";
+		} else {
 			ErrorMessage msg = new ErrorMessage();
-			for(ObjectError err: bindingResult.getAllErrors()) {
+			for (ObjectError err : bindingResult.getAllErrors()) {
 				msg.getMessages().add(err.getDefaultMessage());
 			}
 			model.addAttribute("brands", brandService.findAll());
 			model.addAttribute("productForm", productForm);
-			model.addAttribute("ERROR", msg );
+			model.addAttribute("ERROR", msg);
 			return "admin/product_add";
 		}
 	}
@@ -85,6 +83,7 @@ public class ProductController {
 		Product product = productService.findById(id_product).get();
 		model.addAttribute("brands", brandService.findAll());
 		ProductForm form = new ProductForm();
+		form.setId(product.getId_product());
 		form.setType(product.getType());
 		form.setPhoto(product.getPhoto());
 		form.setDescrip(product.getDescrip());
@@ -98,8 +97,21 @@ public class ProductController {
 	}
 
 	@PostMapping("/update")
-	public String update() {
-		return "admin/product_add";
+	public String update(@Valid ProductForm productForm, BindingResult bindingResult, Model model,
+			RedirectAttributes redirectAttribute) {
+		Product product = productService.findById(productForm.getId()).get();
+		product.setId_product(productForm.getId());
+		product.setType(productForm.getType());
+		product.setPhoto(productForm.getPhoto());
+		product.setDescrip(productForm.getDescrip());
+		product.setColor(productForm.getColor());
+		product.setPrice(productForm.getPrice());
+		product.setStock(productForm.getStock());
+		product.setSold(productForm.getSold());
+		product.setBrand(brandService.findById(productForm.getBrandId()).get());
+		System.out.println(product.getBrand().getName_brand());
+		productService.save(product);
+		return "redirect:/product/list";
 	}
 
 	@GetMapping(value = "/delete/{id}")
